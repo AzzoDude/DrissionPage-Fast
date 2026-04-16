@@ -19,6 +19,16 @@ jobs:
       with:
         python-version: "3.13"
 
+    - name: Cache Dependencies & Nuitka
+      uses: actions/cache@v4
+      with:
+        path: |
+          .venv
+          ~\AppData\Local\Nuitka\Nuitka
+        key: ${{ runner.os }}-build-${{ github.run_id }}
+        restore-keys: |
+          ${{ runner.os }}-build-
+
     - name: Build with Nuitka
       run: |
         .\Scripts\build.bat
@@ -28,4 +38,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: DrissionPage-win-amd64
-        path: dist/*.pyd
+        path: dist/*
